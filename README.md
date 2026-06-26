@@ -1,67 +1,101 @@
-# Payload Blank Template
+<div align="center">
+  <h1>Innogyzer CMS (Backend)</h1>
+  <p><strong>Panel Administrador Headless con Payload CMS y Supabase</strong></p>
+</div>
 
-This template comes configured with the bare minimum to get started on anything you need.
+---
 
-## Quick start
+## 🚀 Overview
 
-This template can be deployed directly from our Cloud hosting and it will setup MongoDB and cloud S3 object storage for media.
+Este repositorio es el **Backend (Headless CMS)** del ecosistema web de Innogyzer. Proporciona la interfaz administrativa y la API REST/GraphQL necesaria para gestionar todo el contenido dinámico de la página pública (Frontend).
 
-## Quick Start - local setup
+Está construido con la versión más reciente de **Payload CMS v3**, ejecutándose sobre Next.js (App Router), y utiliza PostgreSQL como base de datos en la nube.
 
-To spin up this template locally, follow these steps:
+---
 
-### Clone
+## 🛠️ Stack Tecnológico
 
-After you click the `Deploy` button above, you'll want to have standalone copy of this repo on your machine. If you've already cloned this repo, skip to [Development](#development).
+- **Framework Core:** Payload CMS v3
+- **Runtime:** Node.js + Next.js (App Router)
+- **Base de Datos:** PostgreSQL (Alojado en Supabase)
+- **Almacenamiento de Archivos (S3):** Supabase Storage (Buckets)
+- **Lenguaje:** TypeScript
 
-### Development
+---
 
-1. First [clone the repo](#clone) if you have not done so already
-2. `cd my-project && cp .env.example .env` to copy the example environment variables. You'll need to add the `MONGODB_URL` from your Cloud project to your `.env` if you want to use S3 storage and the MongoDB database that was created for you.
+## 📂 Arquitectura de Colecciones
 
-3. `pnpm install && pnpm dev` to install dependencies and start the dev server
-4. open `http://localhost:3000` to open the app in your browser
+El panel está estructurado para gestionar las siguientes entidades principales:
 
-That's it! Changes made in `./src` will be reflected in your app. Follow the on-screen instructions to login and create your first admin user. Then check out [Production](#production) once you're ready to build and serve your app, and [Deployment](#deployment) when you're ready to go live.
+1. **Testimonios (`Testimonials`):**
+   - Gestión de reseñas de clientes y partners.
+   - Contiene: Nombre del cliente, Puesto/Empresa, Cita (Quote) y Foto.
+2. **Equipo (`Team / Users`):**
+   - Gestión de roles de administrador y perfiles directivos.
+3. **Blog (`Posts`):**
+   - Artículos y noticias utilizando el potente editor de texto enriquecido (Lexical Editor).
+4. **Media (`Media`):**
+   - Repositorio centralizado de imágenes y documentos subidos, almacenados directamente en Supabase S3.
 
-#### Docker (Optional)
+*(Nota: Las colecciones antiguas de Portfolio y Services fueron removidas para simplificar la arquitectura, ya que esos datos ahora se manejan de forma estática en el Frontend).*
 
-If you prefer to use Docker for local development instead of a local MongoDB instance, the provided docker-compose.yml file can be used.
+---
 
-To do so, follow these steps:
+## 💻 Desarrollo Local
 
-- Modify the `MONGODB_URL` in your `.env` file to `mongodb://127.0.0.1/<dbname>`
-- Modify the `docker-compose.yml` file's `MONGODB_URL` to match the above `<dbname>`
-- Run `docker-compose up` to start the database, optionally pass `-d` to run in the background.
+### Requisitos Previos
+- Node.js (v18+)
+- Una cuenta de Supabase con una base de datos PostgreSQL activa y un Bucket de S3 público.
 
-## How it works
+### Instalación
 
-The Payload config is tailored specifically to the needs of most websites. It is pre-configured in the following ways:
+1. Clona este repositorio y entra a la carpeta:
+```bash
+git clone https://github.com/TU_USUARIO/innogyzer-cms.git
+cd innogyzer-cms
+```
 
-### Collections
+2. Instala las dependencias:
+```bash
+npm install
+```
 
-See the [Collections](https://payloadcms.com/docs/configuration/collections) docs for details on how to extend this functionality.
+3. Crea un archivo `.env` en la raíz del proyecto. **(Obligatorio para que funcione)**:
+```env
+PAYLOAD_SECRET=cualquier-cadena-segura-y-secreta
+DATABASE_URI=postgresql://postgres:[PASSWORD]@db.[PROJECT_ID].supabase.co:5432/postgres
 
-- #### Users (Authentication)
+# Configuración de S3 (Supabase Storage)
+S3_ENDPOINT=https://[PROJECT_ID].supabase.co/storage/v1/s3
+S3_BUCKET=nombre-de-tu-bucket
+S3_ACCESS_KEY_ID=tu-access-key
+S3_SECRET_ACCESS_KEY=tu-secret-key
+S3_REGION=auto
+```
 
-  Users are auth-enabled collections that have access to the admin panel.
+4. Ejecuta el servidor en modo desarrollo:
+```bash
+npm run dev
+```
 
-  For additional help, see the official [Auth Example](https://github.com/payloadcms/payload/tree/main/examples/auth) or the [Authentication](https://payloadcms.com/docs/authentication/overview#authentication-overview) docs.
+El administrador estará disponible en: **http://localhost:3000/admin**  
+La API REST estará disponible en: **http://localhost:3000/api**
 
-- #### Media
+---
 
-  This is the uploads enabled collection. It features pre-configured sizes, focal point and manual resizing to help you manage your pictures.
+## ☁️ Despliegue en Producción (Vercel)
 
-### Docker
+Este proyecto está optimizado para desplegarse fácilmente en **Vercel** o en plataformas similares que soporten Next.js.
 
-Alternatively, you can use [Docker](https://www.docker.com) to spin up this template locally. To do so, follow these steps:
+1. Importa este repositorio en Vercel.
+2. Ve a la configuración del proyecto y **agrega todas las variables de entorno** que tienes en tu archivo `.env` local.
+3. Haz clic en **Deploy**.
+4. ¡Listo! Vercel construirá la aplicación y te proporcionará una URL pública segura.
 
-1. Follow [steps 1 and 2 from above](#development), the docker-compose file will automatically use the `.env` file in your project root
-1. Next run `docker-compose up`
-1. Follow [steps 4 and 5 from above](#development) to login and create your first admin user
+Recuerda actualizar tu Frontend (`innogyzer-website-light`) para que apunte a esta nueva URL pública en lugar de `localhost`.
 
-That's it! The Docker instance will help you get up and running quickly while also standardizing the development environment across your teams.
+---
 
-## Questions
-
-If you have any issues or questions, reach out to us on [Discord](https://discord.com/invite/payload) or start a [GitHub discussion](https://github.com/payloadcms/payload/discussions).
+<div align="center">
+  <p>Construido con ❤️ por el equipo de Innogyzer.</p>
+</div>
