@@ -1,0 +1,78 @@
+@layer payload-default {
+  :root,
+  html,
+  body,
+  [data-theme='light'],
+  [data-theme='dark'] {
+    /* Pure black background and minimalist Logspot-style palette */
+    --theme-bg: #000000 !important;
+    --theme-elevation-0: #000000 !important;
+    --theme-elevation-50: #0a0a0a !important;
+    --theme-elevation-100: #111111 !important;
+    --theme-elevation-150: #161616 !important;
+    --theme-elevation-200: #1c1c1c !important;
+    --theme-elevation-250: #222222 !important;
+    --theme-elevation-300: #282828 !important;
+    
+    /* Sleek, barely visible borders */
+    --theme-border-color: #1f1f1f !important;
+    
+    /* Clean text colors */
+    --theme-text: #ffffff !important;
+    --theme-text-light: #a3a3a3 !important;
+    
+    /* Force dark mode */
+    color-scheme: dark !important;
+  }
+
+  /* Global font & aesthetic overrides */
+  * {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  /* Minimalist custom scrollbars */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #000000;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #222222;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #333333;
+  }
+
+  /* Softer inputs */
+  input, textarea, select {
+    background-color: #0a0a0a !important;
+    border: 1px solid #1f1f1f !important;
+    border-radius: 6px !important;
+    color: #ffffff !important;
+    transition: all 0.2s ease !important;
+  }
+
+  input:focus, textarea:focus, select:focus {
+    border-color: #444444 !important;
+    outline: none !important;
+    box-shadow: 0 0 0 1px #444444 !important;
+  }
+
+  /* Custom Accent Color for Primary Buttons (Innogyzer Yellow/Green) */
+  .btn--style-primary {
+    background-color: #dcea22 !important;
+    color: #000000 !important;
+    border: none !important;
+  }
+  .btn--style-primary:hover {
+    background-color: #c8d61a !important;
+  }
+
+  /* Remove heavy shadows */
+  * {
+    box-shadow: none !important;
+  }
+}
